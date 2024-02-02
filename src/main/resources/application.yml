@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/SuperCanteen?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: qZJ52028181748
+  devtools:
+    livereload:
+      enabled: true
+
+server:
+  port: 8080
+
+keystring:
+  PJt1etBKdA2vTq7LIyw0iAseRsjVnqmRkKS4zJA7K9g=
