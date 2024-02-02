@@ -16,7 +16,7 @@ public class MyEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         // 直接提示前端认证错误
-        out.write(JSON.toJSONString(Res.Error(null,"认证失败")));
+        out.write(JSON.toJSONString(Res.Error(null,"请重新登陆")));
         out.flush();
         out.close();
     }

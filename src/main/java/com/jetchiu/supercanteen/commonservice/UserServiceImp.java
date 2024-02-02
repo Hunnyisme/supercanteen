@@ -43,8 +43,16 @@ public class UserServiceImp implements UserService, UserDetailsService {
         queryWrapper.eq("account",username);
         UserEntity user=userMapper.selectOne(queryWrapper);
         if (user == null) {
-            throw new UsernameNotFoundException("没有找到该用户");
+            throw new UsernameNotFoundException("没找到该用户");
         }
         return new com.jetchiu.supercanteen.config.UserDetails(user, Collections.emptyList());
+    }
+
+    @Override
+    public UserEntity SelectUserByAccount(String account) {
+        QueryWrapper<UserEntity>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account",account);
+        UserEntity userEntity1=userMapper.selectOne(queryWrapper);
+        return userEntity1;
     }
 }

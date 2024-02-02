@@ -12,12 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserServiceImp userDetailsService;
+    @Autowired
+    private LoginFilter loginFilter;
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
@@ -37,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         // 开启跨域以便前端调用接口
         http.cors();
+        http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
         //禁用session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 这是配置的关键，决定哪些接口开启防护，哪些接口绕过防护

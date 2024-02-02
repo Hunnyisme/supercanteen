@@ -8,4 +8,5 @@ public interface UserService {
    * */
     public boolean CheckExist(UserEntity userEntity);
     public boolean AddUser(UserEntity userEntity);
+    public UserEntity SelectUserByAccount(String account);
 }

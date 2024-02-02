@@ -60,4 +60,13 @@ class SupercanteenApplicationTests {
         System.out.println();
         System.out.println(Base64.getEncoder().encodeToString(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded()));
     }
+    @Test
+    void claimtest(){
+        Claims claims=Jwts.claims();
+claims.put("account","kkk");
+        String token=Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, key).compact();
+        System.out.println(Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("account"));
+
+    }
+
 }
