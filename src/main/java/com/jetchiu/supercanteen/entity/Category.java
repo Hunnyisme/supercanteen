@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Category {
-    Long id;
+    long id;
     String name;
-    Long of_store;
+    long ofStore;
 }

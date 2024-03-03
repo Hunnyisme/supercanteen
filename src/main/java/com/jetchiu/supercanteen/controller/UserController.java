@@ -3,6 +3,7 @@ package com.jetchiu.supercanteen.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jetchiu.supercanteen.DTO.Res;
 import com.jetchiu.supercanteen.DTO.UserDTO;
+import com.jetchiu.supercanteen.commonservice.JWTService;
 import com.jetchiu.supercanteen.commonservice.UserService;
 import com.jetchiu.supercanteen.entity.UserEntity;
 import com.jetchiu.supercanteen.mapper.UserMapper;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +31,8 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private JWTService jwtService;
     UserMapper userMapper;
     @Value("${keystring}")
     String key;
@@ -45,12 +49,18 @@ public class UserController {
         return Res.Error(null,"账号已存在");
     }
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        return userService.AddUser(userEntity)?Res.OK(null):Res.Error(null,"内部错误");
+    UserDTO userDTO=new UserDTO(userEntity.getAccount(), jwtService.CreateTokens(userEntity.getAccount()));
+        return userService.AddUser(userEntity)?Res.OK(userDTO):Res.Error(null,"内部错误");
     }
     @GetMapping
     public Res GetUserInfo( @RequestHeader String Authorization){
-        System.out.println("令牌是"+Authorization);
-        return Res.Error("","");
+       String account= jwtService.GetClaims(Authorization,"account");
+             UserEntity user=userService.SelectUserByAccount(account);
+             user.setPassword("");
+             if(user!=null){
+                 return Res.OK(user);
+             }
+        return Res.Error(null,"获取用户信息失败");
     }
 
     @PostMapping("/log")
@@ -70,8 +80,17 @@ public class UserController {
         Claims claims=Jwts.claims();
         claims.put("account",userEntity1.getAccount());
       String token=Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, key).setExpiration(new Date(System.currentTimeMillis() + 86400000)).compact();
-        UserDTO userDTO=new UserDTO(userEntity1,token);
+        UserDTO userDTO=new UserDTO(userEntity1.getAccount(), token);
         return Res.OK(userDTO);
+    }
+    @GetMapping("/logout")
+    public Res DoLogOut(@RequestParam("account") String account,@RequestHeader String Authorization){
+        System.out.println("登出接口");
+        System.out.println(account);
+        System.out.println(Authorization);
+             SecurityContextHolder.clearContext();
+             return Res.OK(null);
+
     }
 
 }

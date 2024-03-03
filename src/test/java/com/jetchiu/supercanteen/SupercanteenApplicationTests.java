@@ -31,8 +31,7 @@ class SupercanteenApplicationTests {
         admin.setAccount("1112");
         admin.setName("qzj");
         admin.setPassword("qqqqq");
-        admin.setStore_name("mc");
-        admin.setSign_date(LocalDate.now());
+
         System.out.println(adminMapper.insert(admin));
     }
 

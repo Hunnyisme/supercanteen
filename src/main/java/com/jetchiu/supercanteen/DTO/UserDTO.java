@@ -5,12 +5,13 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    public UserDTO(UserEntity userEntity, String tokens) {
-        this.userEntity = userEntity;
-        this.tokens = tokens;
+    String account;
+    String token;
+    public UserDTO(String account, String tokens) {
+        this.account = account;
+        this.token = tokens;
     }
 
-    UserEntity userEntity;
-     String tokens;
+
 
 }

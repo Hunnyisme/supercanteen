@@ -11,6 +11,6 @@ public class Admin {
   String name;
   String account;
   String password;
-  String store_name;
-  LocalDate sign_date;
+  String storeName;
+  LocalDate signDate;
 }
