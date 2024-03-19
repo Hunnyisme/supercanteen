@@ -19,53 +19,5 @@ import java.util.Base64;
 
 @SpringBootTest
 class SupercanteenApplicationTests {
-    @Autowired
-    AdminMapper adminMapper;
-    @Autowired
-    UserMapper userMapper;
-    @Value("${keystring}")
-     String key;
-    @Test
-    void contextLoads() {
-        Admin admin = new Admin();
-        admin.setAccount("1112");
-        admin.setName("qzj");
-        admin.setPassword("qqqqq");
-
-        System.out.println(adminMapper.insert(admin));
-    }
-
-    @Test
-    void test2() throws IOException {
-//        UsernamePasswordToken token=new UsernamePasswordToken("qzj","1111");
-//        token.setRememberMe(true);
-//        Subject currentUser= SecurityUtils.getSubject();
-//        currentUser.login(token);
-//        Path path= Paths.get("/Users/jetchill/IdeaProjects/supercanteen/src/main/resources/static/my.qj");
-//        Files.createFile(path);
-        System.out.println(key);
-        Claims claims=Jwts.claims();
-        claims.put("principal","v1");
-        String token= Jwts.builder().setClaims(claims).signWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(key))).compact();
-        System.out.println(token);
-//        CustomAuthenticationToken customAuthenticationToken=new CustomAuthenticationToken(token,key,userMapper);
-//        System.out.println(customAuthenticationToken.getPrincipal());
-//        System.out.println(customAuthenticationToken.getCredentials());
-
-    }
-    @Test
-    void genKey(){
-
-        System.out.println();
-        System.out.println(Base64.getEncoder().encodeToString(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded()));
-    }
-    @Test
-    void claimtest(){
-        Claims claims=Jwts.claims();
-claims.put("account","kkk");
-        String token=Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, key).compact();
-        System.out.println(Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("account"));
-
-    }
-
 }
+

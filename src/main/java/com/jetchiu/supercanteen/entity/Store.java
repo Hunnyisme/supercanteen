@@ -8,5 +8,9 @@ public class Store {
     String name;
     String address;
     String profile;
-    String icon_address;
+    String iconAddress;
+    int overallScore;
+  int  foodScore;
+  int envScore;
+  int attScore;
 }

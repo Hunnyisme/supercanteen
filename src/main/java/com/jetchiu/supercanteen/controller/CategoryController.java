@@ -50,6 +50,7 @@ public class CategoryController {
     }
     @GetMapping
     public Res GetCate(@RequestParam String storeName){
+        System.out.println("get方法"+storeName);
         long ofstore=storeMapper.selectOne(new QueryWrapper<Store>().eq("name",storeName)).getId();
         QueryWrapper<Category>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("of_store",ofstore);
@@ -62,5 +63,18 @@ public class CategoryController {
         }
 
         return Res.OK(categoryList);
+    }
+    @GetMapping("/name")
+    public Res GetCateName(@RequestParam int id){
+
+        return Res.OK(categoryMapper.selectById(id).getName());
+    }
+
+    @DeleteMapping
+    public Res DeleteCate(@RequestParam int id){
+        System.out.println("接收到的删除id"+id);
+      int status = categoryMapper.deleteById(id);
+        System.out.println("是否删除"+status);
+            return Res.OK(null);
     }
 }

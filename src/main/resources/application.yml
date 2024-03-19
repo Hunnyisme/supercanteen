@@ -7,9 +7,19 @@ spring:
   devtools:
     livereload:
       enabled: true
+  servlet:
+    multipart:
+      max-file-size: 60MB
+      max-request-size: 60MB
 
 server:
   port: 8080
+  tomcat:
+    max-http-form-post-size: 60971520
+
 
 keystring:
   PJt1etBKdA2vTq7LIyw0iAseRsjVnqmRkKS4zJA7K9g=
+
+upload:
+  path: /Users/jetchill/Pictures/uploadpic/

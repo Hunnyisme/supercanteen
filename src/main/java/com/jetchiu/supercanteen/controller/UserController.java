@@ -49,7 +49,7 @@ public class UserController {
         return Res.Error(null,"账号已存在");
     }
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-    UserDTO userDTO=new UserDTO(userEntity.getAccount(), jwtService.CreateTokens(userEntity.getAccount()));
+    UserDTO userDTO=new UserDTO(userEntity.getAccount(), jwtService.CreateTokens(userEntity.getAccount()),null);
         return userService.AddUser(userEntity)?Res.OK(userDTO):Res.Error(null,"内部错误");
     }
     @GetMapping
@@ -80,7 +80,7 @@ public class UserController {
         Claims claims=Jwts.claims();
         claims.put("account",userEntity1.getAccount());
       String token=Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, key).setExpiration(new Date(System.currentTimeMillis() + 86400000)).compact();
-        UserDTO userDTO=new UserDTO(userEntity1.getAccount(), token);
+        UserDTO userDTO=new UserDTO(userEntity1.getAccount(), token,null);
         return Res.OK(userDTO);
     }
     @GetMapping("/logout")

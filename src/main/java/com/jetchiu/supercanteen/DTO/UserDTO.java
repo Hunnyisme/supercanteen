@@ -7,9 +7,11 @@ import lombok.Data;
 public class UserDTO {
     String account;
     String token;
-    public UserDTO(String account, String tokens) {
+    String storeName;
+    public UserDTO(String account, String tokens,String storeName) {
         this.account = account;
         this.token = tokens;
+        this.storeName=storeName;
     }
 
 

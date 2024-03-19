@@ -7,5 +7,6 @@ public class Dish {
 long id;
 String name;
 double price;
-long related_cate;
+long relatedCate;
+String picture;
 }
