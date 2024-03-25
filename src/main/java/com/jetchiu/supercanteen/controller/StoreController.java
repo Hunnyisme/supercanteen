@@ -48,5 +48,10 @@ private StoreMapper storeMapper;
             }
         }
     }
+    @GetMapping("/one")
+    public Res GetOneStore(@RequestParam int storeId){
+
+         return Res.OK(storeMapper.selectById(storeId));
+    }
 
 }

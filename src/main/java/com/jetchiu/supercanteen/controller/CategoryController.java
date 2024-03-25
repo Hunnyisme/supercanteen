@@ -64,6 +64,7 @@ public class CategoryController {
 
         return Res.OK(categoryList);
     }
+    //根据ID查某个分类名
     @GetMapping("/name")
     public Res GetCateName(@RequestParam int id){
 
@@ -76,5 +77,14 @@ public class CategoryController {
       int status = categoryMapper.deleteById(id);
         System.out.println("是否删除"+status);
             return Res.OK(null);
+    }
+
+    @GetMapping("/storeid")
+    public Res GetCateByStoreId(@RequestParam int id){
+        QueryWrapper<Category>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("of_store",id);
+
+
+return Res.OK(categoryMapper.selectList(queryWrapper));
     }
 }

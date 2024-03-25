@@ -39,7 +39,7 @@ AdminMapper adminMapper;
         claims.put("identity","admin");
         claims.put("account",admin1.getAccount());
         String token=Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, key).setExpiration(new Date(System.currentTimeMillis() + 86400000)).compact();
-        UserDTO userDTO=new UserDTO(admin1.getAccount(),token,admin1.getStoreName());
+        UserDTO userDTO=new UserDTO(admin1.getAccount(),token,admin1.getStoreName(), (int) admin1.getId());
 
         return Res.OK(userDTO);
     }

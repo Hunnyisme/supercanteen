@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class Deals_details {
-    long id;
-    long deals_id;
-    String dish_name;
+    int id;
+    String dealsId;
+    String dishName;
     int quantity;
-    double single_price;
+    double singlePrice;
     double subtotal;
 }

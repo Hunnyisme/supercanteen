@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Store {
-    Long id;
+    int id;
     String name;
     String address;
     String profile;
@@ -12,5 +12,6 @@ public class Store {
     int overallScore;
   int  foodScore;
   int envScore;
-  int attScore;
+  int serScore;
+    int hygScore;
 }

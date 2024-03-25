@@ -8,10 +8,12 @@ public class UserDTO {
     String account;
     String token;
     String storeName;
-    public UserDTO(String account, String tokens,String storeName) {
+    int id;
+    public UserDTO(String account, String tokens,String storeName,int id) {
         this.account = account;
         this.token = tokens;
         this.storeName=storeName;
+        this.id=id;
     }
 
 

@@ -2,11 +2,14 @@ package com.jetchiu.supercanteen.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jetchiu.supercanteen.DTO.Res;
+import com.jetchiu.supercanteen.entity.Category;
 import com.jetchiu.supercanteen.entity.Dish;
+import com.jetchiu.supercanteen.mapper.CategoryMapper;
 import com.jetchiu.supercanteen.mapper.DishMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,6 +18,8 @@ public class DishController {
 
     @Autowired
     private DishMapper dishMapper;
+@Autowired
+private CategoryMapper categoryMapper;
     @GetMapping
     public Res GetDish(@RequestParam int id){
         QueryWrapper<Dish> queryWrapper =new QueryWrapper<>();
@@ -43,4 +48,23 @@ public class DishController {
         
         return Res.OK(dishMapper.selectList(new QueryWrapper<Dish>()));
     }
+
+    @GetMapping("/show")
+    public Res GetDishsPlusCate(@RequestParam int storeid){
+       QueryWrapper<Category>queryWrapper=new QueryWrapper<>();
+       queryWrapper.eq("of_store",storeid);
+     List<Category>categoryList=categoryMapper.selectList(queryWrapper);
+       List res=new ArrayList();
+         for(Category c :categoryList){
+             List temlist=new ArrayList();
+             temlist.add(c);
+             QueryWrapper<Dish>queryWrapper1=new QueryWrapper<>();
+             queryWrapper1.eq("related_cate",c.getId());
+             temlist.add(dishMapper.selectList(queryWrapper1));
+             res.add(temlist);
+         }
+        return Res.OK(res);
+    }
+
+
 }
